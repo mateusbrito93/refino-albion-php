@@ -10,7 +10,11 @@
         <script src="js/lang-index.js"></script>
     <?php elseif (basename($_SERVER['PHP_SELF']) == 'tecido.php'): ?>
         <script src="js/lang-tecido.js"></script>
-        <script src="js/script-tecido.js"></script> <script src="js/form-builder-tecido.js"></script>
+        <script src="js/script-tecido.js"></script>
+        <script src="js/form-builder-tecido.js"></script>
+    <?php elseif (basename($_SERVER['PHP_SELF']) == 'pelego.php'): ?>
+        <script src="js/lang-pelego.js"></script>
+        <script src="js/script-pelego.js"></script> <script src="js/form-builder-pelego.js"></script>
     <?php endif; ?>
 </body>
 </html>
