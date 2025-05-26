@@ -290,7 +290,7 @@ function irParaIndex() {
         window.navegarParaGlobal('index');
     } else {
         console.error("Função de navegação global não encontrada. Recorrendo ao link direto.");
-        window.location.href = '/index'; // Fallback
+        window.location.href = '/index.php'; // Fallback
     }
 }
 
