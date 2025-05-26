@@ -4,7 +4,9 @@
     include 'config/languages.php';
 ?>
 
+echo "1"; flush();
 <main class="max-w-6xl mx-auto">
+  echo "2"; flush();
     <h2 class="text-3xl font-bold text-center mb-10">
         <i class="fas fa-chess-queen mr-2"></i><span id="titulo" class="text-center text-white-400 mt-2"></span> </h2>
 
@@ -54,4 +56,5 @@
     </div>
 </main>
 
+echo "3"; flush();
 <?php include 'includes/footer.php'; ?>
