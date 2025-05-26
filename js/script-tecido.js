@@ -221,8 +221,8 @@ async function calcularall() {
             const tecidoAtualData = dadosTecidoAtual.find(d => d.item_id === tecidoAtualItem);
 
             if (!fibraData?.sell_price_min || !tecidoAtualData?.sell_price_min || (tier > 2 && !tecidoAnteriorData?.sell_price_min)) {
-                console.warn(`Dados de preço não encontrados para T${tier} em calcularall, pulando.`);
-                resultadosHTML += `<tr><td class="px-4 py-2 font-bold">T${tier}</td><td colspan="10" class="px-4 py-2 text-center text-orange-500">Dados de preço indisponíveis</td></tr>`;
+                console.warn(`Dados de preço não encontrados para T${tier}.${enc} em calcularall, pulando.`);
+                resultadosHTML += `<tr><td class="px-4 py-2 font-bold">T${tier}.${enc}</td><td colspan="10" class="px-4 py-2 text-center text-orange-500">Dados de preço indisponíveis</td></tr>`;
                 continue;
             }
 
@@ -241,10 +241,10 @@ async function calcularall() {
             const receita = producaoTotal * precoVenda;
             const lucro = receita - custoTotal;
             const rentabilidade = custoTotal > 0 ? ((lucro / custoTotal) * 100).toFixed(2) : "0.00";
-            resultadosHTML += `<tr><td class="px-4 py-2 font-bold">T${tier}</td><td class="px-4 py-2">${totalFibra} x $${formatarValor(precoFibra)}</td><td class="px-4 py-2">${tier > 2 ? totalTecidoAnterior + ' x $' + formatarValor(precoTecido) : '-'}</td><td class="px-4 py-2">${quantidade} x $${formatarValor(precoVenda)}</td><td class="px-4 py-2">${totalFibra + (tier > 2 ? totalTecidoAnterior : 0)}</td><td class="px-4 py-2">${Math.floor(tecidosRetornados)}</td><td class="px-4 py-2">${producaoTotal.toFixed(2)}</td><td class="px-4 py-2">$${formatarValor(custoTotal)}</td><td class="px-4 py-2">$${formatarValor(receita)}</td><td class="px-4 py-2 ${lucro >= 0 ? 'text-green-500' : 'text-red-500'}">$${formatarValor(lucro)}</td><td class="px-4 py-2 ${rentabilidade >= 0 ? 'text-green-500' : 'text-red-500'}">${rentabilidade}%</td></tr>`;
+            resultadosHTML += `<tr><td class="px-4 py-2 font-bold">T${tier}.${enc}</td><td class="px-4 py-2">${totalFibra} x $${formatarValor(precoFibra)}</td><td class="px-4 py-2">${tier > 2 ? totalTecidoAnterior + ' x $' + formatarValor(precoTecido) : '-'}</td><td class="px-4 py-2">${quantidade} x $${formatarValor(precoVenda)}</td><td class="px-4 py-2">${totalFibra + (tier > 2 ? totalTecidoAnterior : 0)}</td><td class="px-4 py-2">${Math.floor(tecidosRetornados)}</td><td class="px-4 py-2">${producaoTotal.toFixed(2)}</td><td class="px-4 py-2">$${formatarValor(custoTotal)}</td><td class="px-4 py-2">$${formatarValor(receita)}</td><td class="px-4 py-2 ${lucro >= 0 ? 'text-green-500' : 'text-red-500'}">$${formatarValor(lucro)}</td><td class="px-4 py-2 ${rentabilidade >= 0 ? 'text-green-500' : 'text-red-500'}">${rentabilidade}%</td></tr>`;
         } catch (error) {
             console.error(`Erro ao calcular para T${tier} em calcularall:`, error);
-            resultadosHTML += `<tr><td class="px-4 py-2 font-bold">T${tier}</td><td colspan="10" class="px-4 py-2 text-center text-red-500">Erro ao buscar dados</td></tr>`;
+            resultadosHTML += `<tr><td class="px-4 py-2 font-bold">T${tier}.${enc}</td><td colspan="10" class="px-4 py-2 text-center text-red-500">Erro ao buscar dados</td></tr>`;
         }
     }
     resultadosHTML += `</tbody></table></div>`;
