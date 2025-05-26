@@ -1,13 +1,5 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-
-// Configurações iniciais
-define('DEFAULT_LANG', 'pt');
-
-// Sistema de tradução
-$translations = [
+return [
     'pt' => [
         'title' => "Refino Albion",
         'titulo' => "Selecione o Tipo de Refino",
@@ -25,7 +17,9 @@ $translations = [
         'madeiradesc' => "Calculadora para refino de madeiras e tábuas",
         'pedradesc' => "Calculadora para refino de pedras e blocos",
         'outrosdesc' => "Calculadora para outros refinos",
-        'copyright' => "© 2025 Calculadora de Refino - Albion Online. Todos os direitos reservados."
+        'copyright' => "© 2025 Calculadora de Refino - Albion Online. Todos os direitos reservados.",
+        'todos_beta' => 'Todos (BETA)',
+        'voltar' => 'Voltar'
     ],
     'en' => [
         'title' => "Albion Refinement",
@@ -44,7 +38,9 @@ $translations = [
         'madeiradesc' => "Calculator for refining wood and boards",
         'pedradesc' => "Calculator for stone and blocks",
         'outrosdesc' => "Other Refinements",
-        'copyright' => "© 2025 Refining Calculator - Albion Online. All rights reserved."
+        'copyright' => "© 2025 Refining Calculator - Albion Online. All rights reserved.",
+        'todos_beta' => 'All (BETA)',
+        'voltar' => 'Back'
     ],
     'es' => [
         'title' => "Refinamiento de Albion",
@@ -63,48 +59,8 @@ $translations = [
         'madeiradesc' => "Calculadora para refinar madera y tableros",
         'pedradesc' => "Calculadora de refinación de piedras y bloques",
         'outrosdesc' => "Otros refinamientos",
-        'copyright' => "© 2025 Calculadora de refinación - Albion Online. Reservados todos los derechos."
+        'copyright' => "© 2025 Calculadora de refinación - Albion Online. Reservados todos los derechos.",
+        'todos_beta' => 'Todos (BETA)',
+        'voltar' => 'Volver'
     ]
 ];
-
-// Obter idioma atual
-function getCurrentLang()
-{
-    global $translations;
-
-    // Verificar parâmetro URL
-    if (isset($_GET['lang']) && array_key_exists($_GET['lang'], $translations)) {
-        $_SESSION['lang'] = $_GET['lang'];
-        return $_GET['lang'];
-    }
-
-    // Verificar sessão
-    if (isset($_SESSION['lang'])) {
-        return $_SESSION['lang'];
-    }
-
-    // Idioma padrão
-    return DEFAULT_LANG;
-}
-
-// Função de tradução
-function t($key)
-{
-    global $translations;
-    $lang = getCurrentLang();
-
-    return $translations[$lang][$key] ?? $key;
-}
-
-// Configuração do tema
-function getTheme()
-{
-    return $_SESSION['theme'] ?? 'dark';
-}
-
-function setTheme($theme)
-{
-    if (in_array($theme, ['light', 'dark'])) {
-        $_SESSION['theme'] = $theme;
-    }
-}
