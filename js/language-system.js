@@ -74,13 +74,12 @@ class LanguageSystem {
     }
 
     updatePageContent() {
-        // Atualizar elementos da página com as traduções
         const elements = {
             title: document.getElementById("title"),
             titulo: document.getElementById("titulo"),
-            titulopelego: document.getElementById("titulopelego"),
-            titulotecido: document.getElementById("titulotecido"),
-            mineiro: document.getElementById("mineiro"),
+            // titulopelego: document.getElementById("titulopelego"), // Geralmente em páginas específicas
+            // titulotecido: document.getElementById("titulotecido"), // Geralmente em páginas específicas
+            minerio: document.getElementById("minerio"), // Corrigido de 'mineiro' para 'minerio' para corresponder ao HTML
             pelego: document.getElementById("pelego"),
             tecido: document.getElementById("tecido"),
             madeira: document.getElementById("madeira"),
@@ -93,8 +92,20 @@ class LanguageSystem {
             pedradesc: document.getElementById("pedradesc"),
             outrosdesc: document.getElementById("outrosdesc"),
             copyright: document.getElementById("copyright"),
-            // ... todos os outros elementos que precisam de tradução
         };
+
+        if (this.translations && this.translations.main) {
+            for (const [key, element] of Object.entries(elements)) {
+                if (element && this.translations.main[key]) {
+                    element.textContent = this.translations.main[key];
+                } else if (element && this.translations[key]) {
+                    // Fallback para caso a chave esteja no nível raiz (menos provável com a API atual)
+                    element.textContent = this.translations[key];
+                }
+            }
+        } else {
+            console.warn('Traduções principais (main) não encontradas em language-system.js');
+        }
 
         for (const [key, element] of Object.entries(elements)) {
             if (element && this.translations[key]) {
@@ -114,8 +125,15 @@ class LanguageSystem {
         }).catch(error => console.error('Error syncing language:', error));
     }
 
-    t(key) {
-        return this.translations[key] || key;
+    t(key, category = 'main') {
+        if (this.translations && this.translations[category] && this.translations[category][key]) {
+            return this.translations[category][key];
+        }
+        // Fallback para o caso de não encontrar em 'main' ou 'form', ou se a estrutura não for a esperada
+        if (this.translations && this.translations[key]) {
+            return this.translations[key]; // Para compatibilidade com chaves no nível raiz, se houver
+        }
+        return key; // Retorna a chave se não encontrar a tradução
     }
 }
 
