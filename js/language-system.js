@@ -1,3 +1,5 @@
+console.log('LanguageSystem iniciando...'); // Adicione no início do constructor
+
 class LanguageSystem {
     constructor() {
         this.translations = {};
@@ -121,3 +123,7 @@ class LanguageSystem {
 document.addEventListener("DOMContentLoaded", () => {
     window.languageSystem = new LanguageSystem();
 });
+
+// E no final do arquivo:
+document.dispatchEvent(new Event('languageSystemReady'));
+console.log('LanguageSystem pronto e evento disparado');

@@ -170,14 +170,24 @@ class FormBuilderTecido {
     }
 }
 
-// Inicialização quando o DOM estiver pronto
 document.addEventListener("DOMContentLoaded", () => {
-    // Verifica se o sistema de linguagem está carregado
+    // Fallback após 1 segundo se o sistema não carregar
+    const fallbackTimeout = setTimeout(() => {
+        if (!window.languageSystem) {
+            console.warn('Carregando fallback para FormBuilder');
+            window.languageSystem = {
+                t: (key, category) => key // Fallback simples
+            };
+            new FormBuilderTecido();
+        }
+    }, 1000);
+
     if (window.languageSystem) {
+        clearTimeout(fallbackTimeout);
         new FormBuilderTecido();
     } else {
-        // Se não estiver pronto, espera pelo evento
         document.addEventListener('languageSystemReady', () => {
+            clearTimeout(fallbackTimeout);
             new FormBuilderTecido();
         });
     }

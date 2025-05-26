@@ -3,7 +3,7 @@ $pageTitle = t('titulotecido');
 include 'includes/header.php';
 ?>
 
-<main class="max-w-6xl mx-auto">
+<main class="max-w-6xl mx-auto" id="contentWrapper">
     <h2 class="text-3xl font-bold text-white mb-6">
         <i class="fas fa-calculator mr-2"></i>
         <span id="titulotecido"><?php echo t('titulotecido'); ?></span>

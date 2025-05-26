@@ -170,15 +170,25 @@ class FormBuilderPelego {
     }
 }
 
-// Inicialização quando o DOM estiver pronto
 document.addEventListener("DOMContentLoaded", () => {
-    // Verifica se o sistema de linguagem está carregado
+    // Fallback após 1 segundo se o sistema não carregar
+    const fallbackTimeout = setTimeout(() => {
+        if (!window.languageSystem) {
+            console.warn('Carregando fallback para FormBuilder');
+            window.languageSystem = {
+                t: (key, category) => key // Fallback simples
+            };
+            new FormBuilderPelego();
+        }
+    }, 1000);
+
     if (window.languageSystem) {
-        new FormBuilderTecido();
+        clearTimeout(fallbackTimeout);
+        new FormBuilderPelego();
     } else {
-        // Se não estiver pronto, espera pelo evento
         document.addEventListener('languageSystemReady', () => {
-            new FormBuilderTecido();
+            clearTimeout(fallbackTimeout);
+            new FormBuilderPelego();
         });
     }
 });
