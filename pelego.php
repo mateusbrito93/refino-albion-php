@@ -1,7 +1,6 @@
 <?php
     $pageTitle = "Refino de Pelegos"; // Título específico
     include 'includes/header.php';
-    include 'config/languages.php';
 ?>
 
 <main class="max-w-6xl mx-auto">
