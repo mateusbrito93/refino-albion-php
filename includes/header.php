@@ -47,7 +47,7 @@
             </div>
             <?php
             $currentPage = basename($_SERVER['PHP_SELF']);
-            if ($currentPage == 'tecido.php' || $currentPage == 'pelego.php'):
+            if ($currentPage == 'index.php' || $currentPage == 'tecido.php' || $currentPage == 'pelego.php'):
                 ?>
                 <div id="toggle-theme"
                     class="theme-switch cursor-pointer w-14 h-8 rounded-full flex items-center px-1 transition duration-300 border border-gray-400 bg-gray-700">
