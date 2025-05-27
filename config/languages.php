@@ -17,7 +17,17 @@ $translations = [
         'madeiradesc' => "Calculadora para refino de madeiras e tábuas",
         'pedradesc' => "Calculadora para refino de pedras e blocos",
         'outrosdesc' => "Calculadora para outros refinos",
-        'copyright' => "© 2025 Calculadora de Refino - Albion Online. Todos os direitos reservados."
+        'copyright' => "© 2025 Calculadora de Refino - Albion Online. Todos os direitos reservados.",
+        'form_tier' => "Tier",
+        'form_encantamento' => "Encantamento",
+        'form_cidadeCompraFibra' => "Cidade de Compra (Fibra)",
+        'form_cidadeCompraPelego' => "Cidade de Compra (Pelego)",
+        'form_cidadeVendaTecido' => "Cidade de Venda (Tecido)",
+        'form_cidadeVendaCouro' => "Cidade de Venda (Couro)",
+        'form_quantidade' => "Quantidade",
+        'form_taxaImposto' => "Taxa de Imposto (Fee)",
+        'form_taxaRetorno' => "Taxa de Retorno (%)",
+        'form_calcular' => "Calcular"
     ],
     'en' => [
         'title' => "Albion Refinement",
@@ -36,7 +46,17 @@ $translations = [
         'madeiradesc' => "Calculator for refining wood and boards",
         'pedradesc' => "Calculator for stone and blocks",
         'outrosdesc' => "Other Refinements",
-        'copyright' => "© 2025 Refining Calculator - Albion Online. All rights reserved."
+        'copyright' => "© 2025 Refining Calculator - Albion Online. All rights reserved.",
+        'form_tier' => "Tier",
+        'form_encantamento' => "Enchantment",
+        'form_cidadeCompraFibra' => "Purchase City (Fiber)",
+        'form_cidadeCompraPelego' => "Purchase City (Hide)",
+        'form_cidadeVendaTecido' => "Sell City (Cloth)",
+        'form_cidadeVendaCouro' => "Sell City (Leather)",
+        'form_quantidade' => "Amount",
+        'form_taxaImposto' => "Tax (Fee)",
+        'form_taxaRetorno' => "Return Rate (%)",
+        'form_calcular' => "Calculate"
     ],
     'es' => [
         'title' => "Refinamiento de Albion",
@@ -55,7 +75,17 @@ $translations = [
         'madeiradesc' => "Calculadora para refinar madera y tableros",
         'pedradesc' => "Calculadora de refinación de piedras y bloques",
         'outrosdesc' => "Otros refinamientos",
-        'copyright' => "© 2025 Calculadora de refinación - Albion Online. Reservados todos los derechos."
+        'copyright' => "© 2025 Calculadora de refinación - Albion Online. Reservados todos los derechos.",
+        'form_tier' => "Tier",
+        'form_encantamento' => "Encantamiento",
+        'form_cidadeCompraFibra' => "Ciudad de Compra (Fibra)",
+        'form_cidadeCompraPelego' => "Ciudad de Compra (Piel)",
+        'form_cidadeVendaTecido' => "Ciudad de Venta (Tejido)",
+        'form_cidadeVendaCouro' => "Ciudad de Venta (Cuero)",
+        'form_quantidade' => "Cantidad",
+        'form_taxaImposto' => "Tasa de Impuesto (Fee)",
+        'form_taxaRetorno' => "Tasa de Retorno (%)",
+        'form_calcular' => "Calcular"
     ],
 ];
 
