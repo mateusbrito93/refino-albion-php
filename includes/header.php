@@ -14,6 +14,11 @@
     <?php endif; ?>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon.png">
+    <script>
+        // Passa as traduções do PHP para o JavaScript
+        window.translations = <?php echo json_encode($translations); ?>;
+        window.currentLang = '<?php echo $lang; ?>';
+    </script>
 </head>
 
 <body
