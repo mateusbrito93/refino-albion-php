@@ -8,15 +8,25 @@ function applyTheme(isLight) {
     const themeIcon = document.getElementById("theme-icon");
 
     if (isLight) {
-        html.classList.add("light-theme"); // Usando light-theme para evitar conflitos
+        html.classList.add("light-theme");
         if (themeIcon) {
             themeIcon.classList.replace("fa-moon", "fa-sun");
         }
+        // Força a cor do texto
+        document.querySelectorAll('#title, #titulo').forEach(el => {
+            el.classList.add('text-gray-800');
+            el.classList.remove('text-white');
+        });
     } else {
         html.classList.remove("light-theme");
         if (themeIcon) {
             themeIcon.classList.replace("fa-sun", "fa-moon");
         }
+        // Restaura a cor do texto
+        document.querySelectorAll('#title, #titulo').forEach(el => {
+            el.classList.add('text-white');
+            el.classList.remove('text-gray-800');
+        });
     }
 }
 

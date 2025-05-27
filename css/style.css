@@ -469,3 +469,16 @@ html.light .text-red-300 {
 .light-theme #theme-icon {
   color: #f59e0b !important;
 }
+
+/* Cores do texto para o tema claro */
+.light-theme #title,
+.light-theme #titulo {
+  color: #1f2937 !important;
+  /* Cor escura para o tema claro */
+}
+
+/* Cores específicas para os cards no tema claro */
+.light-theme .card-refino h3,
+.light-theme .card-refino p {
+  color: #1f2937 !important;
+}

@@ -44,7 +44,7 @@
                     echo 'fa-industry';
                 }
                 ?> mr-2 text-yellow-300"></i>
-                <span id="title"></span>
+                <span id="title" class="text-white"></span>
             </h1>
             <div class="language-selector" style="display: flex; align-items: center; gap: 10px;">
                 <img src="img/br.png" alt="Português" data-lang="pt">
