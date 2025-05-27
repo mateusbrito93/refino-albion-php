@@ -82,6 +82,54 @@ window.addEventListener('load', () => {
     }
 });
 
+document.addEventListener("DOMContentLoaded", () => {
+    setTimeout(() => {
+        const wrapper = document.getElementById('contentWrapper');
+        if (wrapper) {
+            wrapper.style.opacity = '1';
+        }
+    }, 50);
+
+    const toggleDiv = document.getElementById("toggle-theme");
+    const themeIcon = document.getElementById("theme-icon");
+    const html = document.documentElement;
+
+    function aplicarTemaClaro() {
+        html.classList.add("light");
+        if (themeIcon) {
+            themeIcon.classList.remove("fa-moon");
+            themeIcon.classList.add("fa-sun");
+        }
+        localStorage.setItem("tema", "claro");
+    }
+
+    function aplicarTemaEscuro() {
+        html.classList.remove("light");
+        if (themeIcon) {
+            themeIcon.classList.remove("fa-sun");
+            themeIcon.classList.add("fa-moon");
+        }
+        localStorage.setItem("tema", "escuro");
+    }
+
+    if (toggleDiv) {
+        toggleDiv.addEventListener("click", () => {
+            if (html.classList.contains("light")) {
+                aplicarTemaEscuro();
+            } else {
+                aplicarTemaClaro();
+            }
+        });
+    }
+
+    const temaSalvo = localStorage.getItem("tema");
+    if (temaSalvo === "claro") {
+        aplicarTemaClaro();
+    } else {
+        aplicarTemaEscuro();
+    }
+});
+
 // Efeito de transição ao usar os botões voltar/avançar.
 // window.addEventListener('popstate', function(event) {
 //     // Lógica opcional para transição ao usar botões de histórico do navegador
