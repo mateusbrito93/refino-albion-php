@@ -421,7 +421,8 @@ html.light .text-red-300 {
 }
 
 .light-theme .bg-gray-900,
-.light-theme .bg-gray-800 {
+.light-theme .bg-gray-800,
+.light-theme .bg-gray-700 {
   background-color: #e5e7eb !important;
 }
 
