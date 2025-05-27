@@ -1,49 +1,33 @@
-class TecidoCalculator {
-    constructor() {
-        this.languageSystem = window.languageSystem;
-        this.init();
-    }
+function formatarValor(valor) {
+    return new Intl.NumberFormat('pt-BR', {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
+    }).format(valor);
+}
 
-    init() {
-        this.setupEventListeners();
-    }
+function carregarImagens(tier, enc, totalFibra, totalTecidoAnterior) {
+    const encSuffix = enc > 0 ? `_LEVEL${enc}_${enc}` : '';
+    const imgStyle = "h-8 mr-2";
+    const encSuffixTecidoAnt = (tier - 1 >= 4 && enc > 0) ? `_LEVEL${enc}_${enc}` : '';
 
-    setupEventListeners() {
-        // Eventos podem ser adicionados aqui se necessário
-    }
+    let html = `
+        <div class="flex items-center mt-2">
+            <img src="img/T${tier}_FIBER${encSuffix}.png" class="${imgStyle}" 
+                 onerror="this.src='img/default.png'" alt="Fibra T${tier}">
+            <span>${formatarValor(totalFibra)} un.</span>
+        </div>
+    `;
 
-    formatarValor(valor) {
-        return new Intl.NumberFormat(this.languageSystem.getLocale(), {
-            minimumFractionDigits: 0,
-            maximumFractionDigits: 0
-        }).format(valor);
-    }
-
-    carregarImagens(tier, enc, totalFibra, totalTecidoAnterior) {
-        const t = this.languageSystem.getTranslations('main');
-        const encSuffix = enc > 0 ? `_LEVEL${enc}_${enc}` : '';
-        const imgStyle = "h-8 mr-2";
-        const encSuffixTecidoAnt = (tier - 1 >= 4 && enc > 0) ? `_LEVEL${enc}_${enc}` : '';
-
-        let html = `
-            <div class="flex items-center mt-2">
-                <img src="img/T${tier}_FIBER${encSuffix}.png" class="${imgStyle}" 
-                     onerror="this.src='img/default.png'" alt="${t.fibra || 'Fibra'} T${tier}">
-                <span>${this.formatarValor(totalFibra)} ${t.unidades || 'un.'}</span>
-            </div>
+    if (tier > 2) {
+        html += `
+        <div class="flex items-center mt-2">
+            <img src="img/T${tier - 1}_CLOTH${encSuffixTecidoAnt}.png" class="${imgStyle}"
+                 onerror="this.src='img/default.png'" alt="Tecido T${tier - 1}">
+            <span>${formatarValor(totalTecidoAnterior)} un.</span>
+        </div>
         `;
-
-        if (tier > 2) {
-            html += `
-            <div class="flex items-center mt-2">
-                <img src="img/T${tier - 1}_CLOTH${encSuffixTecidoAnt}.png" class="${imgStyle}"
-                     onerror="this.src='img/default.png'" alt="${t.tecido_anterior || 'Tecido Anterior'} T${tier - 1}">
-                <span>${this.formatarValor(totalTecidoAnterior)} ${t.unidades || 'un.'}</span>
-            </div>
-            `;
-        }
-        return html;
     }
+    return html;
 }
 
 async function calcular() {
@@ -359,8 +343,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
-    window.addEventListener('popstate', function () {
-        window.location.reload();
-    });
+window.addEventListener('popstate', function () {
+    window.location.reload();
+});
 
-    window.irParaIndex = irParaIndex;
+window.irParaIndex = irParaIndex;
