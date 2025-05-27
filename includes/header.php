@@ -64,7 +64,7 @@
     </header>
     <?php
     $currentPage = basename($_SERVER['PHP_SELF']);
-    if ($currentPage == 'tecido.php' || $currentPage == 'pelego.php'):
+    if ($currentPage == 'index.php' || $currentPage == 'tecido.php' || $currentPage == 'pelego.php'):
         ?>
         <div class="max-w-6xl mx-auto mb-6 px-4">
             <button onclick="window.location.href = 'index.php'"
