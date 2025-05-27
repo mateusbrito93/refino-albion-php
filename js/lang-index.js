@@ -1,4 +1,4 @@
-// Elementos que precisam de tradução
+// 1. Defina os elementos a serem traduzidos
 const elementsToTranslate = {
   title: document.getElementById("title"),
   titulo: document.getElementById("titulo"),
@@ -19,7 +19,7 @@ const elementsToTranslate = {
   copyright: document.getElementById("copyright")
 };
 
-// Função para trocar idioma
+// 2. Função de tradução
 function updateLanguage(lang) {
   const translation = window.translations[lang];
   if (!translation) {
@@ -27,7 +27,6 @@ function updateLanguage(lang) {
     return;
   }
 
-  // Atualiza todos os elementos
   Object.keys(elementsToTranslate).forEach(key => {
     if (elementsToTranslate[key] && translation[key]) {
       elementsToTranslate[key].textContent = translation[key];
@@ -35,22 +34,21 @@ function updateLanguage(lang) {
   });
 }
 
-// Evento de clique nas bandeiras
+// 3. Evento de troca de idioma
 document.querySelectorAll(".language-selector img").forEach(btn => {
   btn.addEventListener("click", () => {
     const selectedLang = btn.getAttribute("data-lang");
     localStorage.setItem("lang", selectedLang);
     updateLanguage(selectedLang);
-    if (typeof rebuildForm === 'function') {
-      rebuildForm(selectedLang);
+    if (window.languageSystem) {
+      window.languageSystem.setLanguage(selectedLang);
     }
-
-    // Atualiza a página para aplicar as mudanças no PHP também
-    const url = new URL(window.location.href);
-    url.searchParams.set('lang', selectedLang);
-    window.location.href = url.toString();
   });
 });
 
-// Idioma inicial
-updateLanguage(window.currentLang);
+// 4. Idioma inicial
+const currentLang = localStorage.getItem('lang') || 'pt';
+updateLanguage(currentLang);
+if (window.languageSystem) {
+  window.languageSystem.setLanguage(currentLang);
+}

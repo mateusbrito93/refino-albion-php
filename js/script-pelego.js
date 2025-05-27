@@ -305,41 +305,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const toggleDiv = document.getElementById("toggle-theme");
     const themeIcon = document.getElementById("theme-icon");
     const html = document.documentElement;
-
-    function aplicarTemaClaro() {
-        html.classList.add("light");
-        if (themeIcon) {
-            themeIcon.classList.remove("fa-moon");
-            themeIcon.classList.add("fa-sun");
-        }
-        localStorage.setItem("tema", "claro");
-    }
-
-    function aplicarTemaEscuro() {
-        html.classList.remove("light");
-        if (themeIcon) {
-            themeIcon.classList.remove("fa-sun");
-            themeIcon.classList.add("fa-moon");
-        }
-        localStorage.setItem("tema", "escuro");
-    }
-
-    if (toggleDiv) {
-        toggleDiv.addEventListener("click", () => {
-            if (html.classList.contains("light")) {
-                aplicarTemaEscuro();
-            } else {
-                aplicarTemaClaro();
-            }
-        });
-    }
-
-    const temaSalvo = localStorage.getItem("tema");
-    if (temaSalvo === "claro") {
-        aplicarTemaClaro();
-    } else {
-        aplicarTemaEscuro();
-    }
 });
 
 window.addEventListener('popstate', function () {
