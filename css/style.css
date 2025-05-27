@@ -161,19 +161,29 @@ html.light button {
   border-color: #cbd5e1;
 }
 
-html.light .bg-gray-700,
-html.light .bg-gray-800,
-html.light .bg-gray-900 {
+html.light .bg-gray-700 {
   background-color: #e5e7eb;
+}
+
+html.light .bg-gray-900 {
+  background-color: #f3f4f6 !important;
+  color: #1f2937 !important;
+}
+
+html.light .bg-gray-800 {
+  background-color: #e5e7eb !important;
 }
 
 html.light .text-white {
   color: #111827 !important;
 }
 
-html.light .text-gray-300,
-html.light .text-gray-400 {
+html.light .text-gray-300 {
   color: #4b5563 !important;
+}
+
+html.light .text-gray-400 {
+  color: #6b7280 !important;
 }
 
 html.light .border-gray-600,
@@ -366,9 +376,9 @@ html.light #theme-icon {
 
 /* Estilos específicos para o tema no index */
 html.light .card-refino {
-  background-color: #ffffff;
-  color: #1f2937;
-  border-color: #e5e7eb;
+  background-color: #ffffff !important;
+  color: #1f2937 !important;
+  border-color: #e5e7eb !important;
 }
 
 html.light .card-refino h3 {
@@ -381,25 +391,25 @@ html.light .card-refino p {
 
 /* Cores específicas para cada card no tema claro */
 html.light .text-blue-300 {
-  color: #2563eb;
+  color: #3b82f6 !important;
 }
 
 html.light .text-orange-300 {
-  color: #ea580c;
+  color: #f97316 !important;
 }
 
 html.light .text-purple-300 {
-  color: #7c3aed;
+  color: #8b5cf6 !important;
 }
 
 html.light .text-green-300 {
-  color: #16a34a;
+  color: #10b981 !important;
 }
 
 html.light .text-gray-300 {
-  color: #4b5563;
+  color: #6b7280 !important;
 }
 
 html.light .text-red-300 {
-  color: #dc2626;
+  color: #ef4444 !important;
 }

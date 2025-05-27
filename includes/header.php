@@ -12,7 +12,9 @@
     <?php if (basename($_SERVER['PHP_SELF']) == 'index.php'): ?>
         <link rel="stylesheet" href="css/style2.css">
     <?php endif; ?>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon.png">
     <script>
         // Passa as traduções do PHP para o JavaScript
@@ -24,11 +26,15 @@
     <link rel="preload" href="img/tecido.webp" as="image">
 </head>
 
-<body
-    class="p-6 font-sans min-h-screen <?php echo (basename($_SERVER['PHP_SELF']) == 'index.php' ? 'bg-gray-900 text-white' : ''); ?>">
+<body class="p-6 font-sans min-h-screen <?php
+echo (basename($_SERVER['PHP_SELF']) == 'index.php' ? 'bg-gray-900 text-white' : '');
+echo (isset($_SESSION['tema']) && $_SESSION['tema'] === 'claro' ? ' light' : '');
+?>">
     <div id="pageTransition" class="page-transition">
         <span class="loader"></span>
     </div>
+    <?php echo (isset($_COOKIE['tema']) && $_COOKIE['tema'] === 'claro' ? 'light' : ''); ?>">
+
     <header
         class="navbar sticky top-0 z-50 <?php echo (basename($_SERVER['PHP_SELF']) == 'index.php' ? 'bg-gray-800' : 'bg-gray-900'); ?> text-white shadow-md py-4 px-6 mb-10">
         <div class="max-w-6xl mx-auto flex justify-between items-center">

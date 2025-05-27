@@ -46,11 +46,15 @@ function setupThemeSwitcher() {
             if (themeIcon) {
                 themeIcon.classList.replace("fa-moon", "fa-sun");
             }
+            // Atualizar session via AJAX
+            fetch('set_theme.php?theme=claro');
         } else {
             html.classList.remove("light");
             if (themeIcon) {
                 themeIcon.classList.replace("fa-sun", "fa-moon");
             }
+            // Atualizar session via AJAX
+            fetch('set_theme.php?theme=escuro');
         }
     };
 
@@ -62,14 +66,16 @@ function setupThemeSwitcher() {
         });
     }
 
-    // Verificar tema salvo ou preferência do sistema
+    // Verificar tema (localStorage > session > preferência do sistema)
     const savedTheme = localStorage.getItem("tema");
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
-    if (savedTheme === "claro" || (!savedTheme && !prefersDark)) {
+    if (savedTheme === "claro") {
         applyTheme(true);
-    } else {
+    } else if (savedTheme === "escuro") {
         applyTheme(false);
+    } else if (!prefersDark) {
+        applyTheme(true);
     }
 }
 
