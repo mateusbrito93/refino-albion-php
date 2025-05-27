@@ -1,4 +1,3 @@
-<?php include_once 'config/languages.php'; ?>
 <?php $pageTitle = t('title'); ?>
 <!DOCTYPE html>
 <html lang="<?php echo getCurrentLang(); ?>">
