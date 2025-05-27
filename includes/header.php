@@ -19,6 +19,9 @@
         window.translations = <?php echo json_encode($translations); ?>;
         window.currentLang = '<?php echo $lang; ?>';
     </script>
+    <link rel="preload" href="img/minerio.webp" as="image">
+    <link rel="preload" href="img/pelego.webp" as="image">
+    <link rel="preload" href="img/tecido.webp" as="image">
 </head>
 
 <body

@@ -12,7 +12,7 @@ include 'includes/header.php';
     <div class="card-refino bg-gray-800 rounded-xl p-6 shadow-lg transition-all duration-300 cursor-pointer"
       onclick="redirecionar('#')">
       <div class="flex flex-col items-center text-center">
-        <img src="img/minerio.png" alt="Minério" class="h-24 mb-4">
+        <img src="img/minerio.webp" alt="Minério" class="h-24 mb-4">
         <h3 class="text-xl font-bold mb-2 text-blue-300" id="minerio"></h3>
         <p class="text-gray-400" id="mineriodesc"></p>
       </div>
@@ -20,7 +20,7 @@ include 'includes/header.php';
     <div class="card-refino bg-gray-800 rounded-xl p-6 shadow-lg transition-all duration-300 cursor-pointer"
       onclick="redirecionar('pelego')">
       <div class="flex flex-col items-center text-center">
-        <img src="img/pelego.png" alt="Pelego" class="h-24 mb-4">
+        <img src="img/pelego.webp" alt="Pelego" class="h-24 mb-4">
         <h3 class="text-xl font-bold mb-2 text-orange-300" id="pelego"></h3>
         <p class="text-gray-400" id="pelegodesc"></p>
       </div>
@@ -28,7 +28,7 @@ include 'includes/header.php';
     <div class="card-refino bg-gray-800 rounded-xl p-6 shadow-lg transition-all duration-300 cursor-pointer"
       onclick="redirecionar('tecido')">
       <div class="flex flex-col items-center text-center">
-        <img src="img/tecido.png" alt="Tecido" class="h-24 mb-4">
+        <img src="img/tecido.webp" alt="Tecido" class="h-24 mb-4">
         <h3 class="text-xl font-bold mb-2 text-purple-300" id="tecido"></h3>
         <p class="text-gray-400" id="tecidodesc"></p>
       </div>
