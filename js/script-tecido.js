@@ -47,115 +47,103 @@ class TecidoCalculator {
 }
 
 async function calcular() {
-    const t = this.languageSystem.getTranslations('main');
+    const cidadeCompra = document.getElementById('cidadeCompra').value;
+    const cidadeVenda = document.getElementById('cidadeVenda').value;
+    const tier = parseInt(document.getElementById('tier').value);
+    const enc = parseInt(document.getElementById('encantamento').value);
+    const quantidade = parseInt(document.getElementById('quantidade').value);
+    const taxa = parseFloat(document.getElementById('taxaImposto').value);
+    const taxaRetorno = parseFloat(document.getElementById('taxaRetorno').value);
+
+    const cidadeCompraFormatada = cidadeCompra.toLowerCase().replace(/\s/g, '');
+    const cidadeVendaFormatada = cidadeVenda.toLowerCase().replace(/\s/g, '');
+
+    const fibraItem = `T${tier}_FIBER${enc > 0 ? '_LEVEL' + enc + '@' + enc : ''}`;
+    const tecidoAnteriorItem = tier > 2
+        ? `T${tier - 1}_CLOTH${(tier - 1 >= 4 && enc > 0) ? '_LEVEL' + enc + '@' + enc : ''}`
+        : null;
+    const tecidoAtualItem = `T${tier}_CLOTH${enc > 0 ? '_LEVEL' + enc + '@' + enc : ''}`;
+
+    const urlFibra = `https://west.albion-online-data.com/api/v2/stats/prices/${fibraItem}.json?locations=${cidadeCompraFormatada}`;
+    const urlTecidoAnterior = tecidoAnteriorItem ?
+        `https://west.albion-online-data.com/api/v2/stats/prices/${tecidoAnteriorItem}.json?locations=${cidadeCompraFormatada}` :
+        null;
+    const urlTecidoAtual = `https://west.albion-online-data.com/api/v2/stats/prices/${tecidoAtualItem}.json?locations=${cidadeVendaFormatada}`;
 
     try {
-        const cidadeCompra = document.getElementById('cidadeCompra').value;
-        const cidadeVenda = document.getElementById('cidadeVenda').value;
-        const tier = parseInt(document.getElementById('tier').value);
-        const enc = parseInt(document.getElementById('encantamento').value);
-        const quantidade = parseInt(document.getElementById('quantidade').value);
-        const taxa = parseFloat(document.getElementById('taxaImposto').value);
-        const taxaRetorno = parseFloat(document.getElementById('taxaRetorno').value);
+        iniciarBarraProgresso();
+        document.getElementById("resultado").innerHTML = `<div class="animate-pulse grid grid-cols-1 md:grid-cols-3 gap-4"><div class="bg-gray-700 rounded-lg p-6 space-y-4"><div class="h-6 bg-gray-600 rounded w-1/2"></div><div class="h-24 bg-gray-600 rounded"></div><div class="h-4 bg-gray-600 rounded w-1/3"></div></div><div class="bg-gray-700 rounded-lg p-6 space-y-4"><div class="h-6 bg-gray-600 rounded w-1/2"></div><div class="h-24 bg-gray-600 rounded"></div><div class="h-4 bg-gray-600 rounded w-1/3"></div></div><div class="bg-gray-700 rounded-lg p-6 space-y-4"><div class="h-6 bg-gray-600 rounded w-1/2"></div><div class="h-24 bg-gray-600 rounded"></div><div class="h-4 bg-gray-600 rounded w-1/3"></div></div></div><p class="text-center mt-6 text-gray-400">Buscando preços atualizados...</p>`;
 
-        // Validação básica
-        if (isNaN(quantidade)) {
-            throw new Error(t.erro_quantidade || "Quantidade inválida");
+        const fetchPromises = [
+            fetch(urlFibra),
+            urlTecidoAnterior ? fetch(urlTecidoAnterior) : Promise.resolve(null),
+            fetch(urlTecidoAtual)
+        ];
+        const [resFibra, resTecidoAnt, resTecidoAtual] = await Promise.all(fetchPromises);
+        const [dadosFibra, dadosTecidoAnt, dadosTecidoAtual] = await Promise.all([
+            resFibra.json(),
+            resTecidoAnt ? resTecidoAnt.json() : Promise.resolve(null),
+            resTecidoAtual.json()
+        ]);
+
+        const fibraData = dadosFibra.find(d => d.item_id === fibraItem);
+        const tecidoAnteriorData = tecidoAnteriorItem ? dadosTecidoAnt?.find(d => d.item_id === tecidoAnteriorItem) : null;
+        const tecidoAtualData = dadosTecidoAtual.find(d => d.item_id === tecidoAtualItem);
+
+        let errorMessage = '';
+        const encSuffixFibraError = enc > 0 ? `_LEVEL${enc}_${enc}` : '';
+        const encSuffixTecidoAntError = (tier - 1 >= 4 && enc > 0) ? `_LEVEL${enc}_${enc}` : '';
+        const encSuffixTecidoAtualError = enc > 0 ? `_LEVEL${enc}_${enc}` : '';
+
+        if (!fibraData?.sell_price_min) {
+            errorMessage += `<div class="flex items-center gap-3 mt-2"><img src="img/T${tier}_FIBER${encSuffixFibraError}.png" alt="Fibra" class="h-8 w-8"><span>Preço não encontrado para <strong>${fibraItem}</strong> em ${cidadeCompra}</span></div>`;
         }
+        if (tier > 2 && !tecidoAnteriorData?.sell_price_min) {
+            errorMessage += `<div class="flex items-center gap-3 mt-2"><img src="img/T${tier - 1}_CLOTH${encSuffixTecidoAntError}.png" alt="Tecido Anterior" class="h-8 w-8"><span>Preço não encontrado para <strong>${tecidoAnteriorItem}</strong> em ${cidadeCompra}</span></div>`;
+        }
+        if (!tecidoAtualData?.sell_price_min) {
+            errorMessage += `<div class="flex items-center gap-3 mt-2"><img src="img/T${tier}_CLOTH${encSuffixTecidoAtualError}.png" alt="Tecido Atual" class="h-8 w-8"><span>Preço não encontrado para <strong>${tecidoAtualItem}</strong> em ${cidadeVenda}</span></div>`;
+        }
+
+        if (errorMessage) {
+            document.getElementById("resultado").innerHTML = `<div class="bg-red-900 text-white p-4 rounded-lg"><p class="font-bold"><i class="fas fa-exclamation-triangle mr-2"></i>Erro ao buscar preços</p>${errorMessage}<button onclick="calcular()" class="mt-4 bg-red-700 hover:bg-red-600 text-white px-4 py-2 rounded-lg"><i class="fas fa-sync-alt mr-2"></i>Tentar novamente</button></div>`;
+            finalizarBarraProgresso();
+            scrollParaResultados();
+            return;
+        }
+
+        const precoFibra = fibraData.sell_price_min;
+        const precoTecido = tecidoAnteriorData?.sell_price_min || 0;
+        const precoVenda = tecidoAtualData.sell_price_min;
+        const fibrasPorTecido = { 2: 1, 3: 2, 4: 2, 5: 3, 6: 4, 7: 5, 8: 5 };
+        const tecidosAnteriores = { 2: 0, 3: 1, 4: 1, 5: 1, 6: 1, 7: 1, 8: 1 };
+        const totalFibra = fibrasPorTecido[tier] * quantidade;
+        const totalTecidoAnterior = tecidosAnteriores[tier] * quantidade;
+        const tecidosRetornados = quantidade * (taxaRetorno / (100 - taxaRetorno));
+        const producaoTotal = quantidade + tecidosRetornados;
+        const imagensMateriais = carregarImagens(tier, enc, totalFibra, totalTecidoAnterior);
+        const custoFibra = totalFibra * precoFibra;
+        const custoTecidoAnterior = totalTecidoAnterior * precoTecido;
+        const custoBarraca = taxa;
+        const custoTotal = custoFibra + custoTecidoAnterior + custoBarraca;
+        const receita = producaoTotal * precoVenda;
+        const lucro = receita - custoTotal;
+        const rentabilidade = custoTotal > 0 ? ((lucro / custoTotal) * 100).toFixed(2) : "0.00";
+        const corLucro = lucro >= 0 ? "text-green-600" : "text-red-600";
+        const corLucro2 = rentabilidade >= 0 ? "text-green-600" : "text-red-600";
 
         if ((tier === 2 || tier === 3) && enc > 0) {
-            throw new Error(t.erro_encantamento || "Tecidos T2/T3 não possuem encantamento");
+            document.getElementById("resultado").innerHTML = `<div class="bg-red-900 text-white p-4 rounded-lg"><p class="font-bold"><i class="fas fa-exclamation-triangle mr-2"></i>Erro</p><p class="mt-2">Tecidos T${tier} não possuem encantamento!</p><button onclick="calcular()" class="mt-4 bg-red-700 hover:bg-red-600 text-white px-4 py-2 rounded-lg"><i class="fas fa-sync-alt mr-2"></i>Tentar novamente</button></div>`;
+            finalizarBarraProgresso();
+            scrollParaResultados();
+            return;
         }
+        const locaisComercioHTML = tier > 2 ? `<div class="grid grid-cols-1 md:grid-cols-3 gap-2"><p><span class="font-medium">Compra Fibra:</span> <span class="text-yellow-300">${cidadeCompra}</span></p><p><span class="font-medium">Compra Tecido:</span> <span class="text-yellow-300">${cidadeCompra}</span></p><p><span class="font-medium">Venda Tecido:</span> <span class="text-green-300">${cidadeVenda}</span></p></div>` : `<div class="grid grid-cols-1 md:grid-cols-2 gap-2"><p><span class="font-medium">Compra Fibra:</span> <span class="text-yellow-300">${cidadeCompra}</span></p><p><span class="font-medium">Venda Tecido:</span> <span class="text-green-300">${cidadeVenda}</span></p></div>`;
+        const temEncTecidoAnterior = tier - 1 >= 4 && enc > 0;
+        const encSuffixTecidoAnteriorHTML = temEncTecidoAnterior ? `_LEVEL${enc}_${enc}` : '';
+        const tecidoAnteriorCardHTML = tier > 2 ? `<div class="bg-gray-700 p-4 rounded-lg text-center shadow-lg hover:shadow-xl transition-shadow"><h3 class="font-semibold mb-2 text-blue-300">Tecido T${tier - 1}${temEncTecidoAnterior ? '.' + enc : ''}</h3><img src="img/T${tier - 1}_CLOTH${encSuffixTecidoAnteriorHTML}.png" class="mx-auto h-24 mb-2" alt="Tecido Anterior" onerror="this.src='img/default.png'"><p class="text-xl font-bold">$${formatarValor(precoTecido)}</p><p class="text-sm text-gray-400">por unidade</p></div>` : '';
 
-        const cidadeCompraFormatada = cidadeCompra.toLowerCase().replace(/\s/g, '');
-        const cidadeVendaFormatada = cidadeVenda.toLowerCase().replace(/\s/g, '');
-
-        const fibraItem = `T${tier}_FIBER${enc > 0 ? '_LEVEL' + enc + '@' + enc : ''}`;
-        const tecidoAnteriorItem = tier > 2
-            ? `T${tier - 1}_CLOTH${(tier - 1 >= 4 && enc > 0) ? '_LEVEL' + enc + '@' + enc : ''}`
-            : null;
-        const tecidoAtualItem = `T${tier}_CLOTH${enc > 0 ? '_LEVEL' + enc + '@' + enc : ''}`;
-
-        const urlFibra = `https://west.albion-online-data.com/api/v2/stats/prices/${fibraItem}.json?locations=${cidadeCompraFormatada}`;
-        const urlTecidoAnterior = tecidoAnteriorItem ?
-            `https://west.albion-online-data.com/api/v2/stats/prices/${tecidoAnteriorItem}.json?locations=${cidadeCompraFormatada}` :
-            null;
-        const urlTecidoAtual = `https://west.albion-online-data.com/api/v2/stats/prices/${tecidoAtualItem}.json?locations=${cidadeVendaFormatada}`;
-
-        try {
-            iniciarBarraProgresso();
-            document.getElementById("resultado").innerHTML = `<div class="animate-pulse grid grid-cols-1 md:grid-cols-3 gap-4"><div class="bg-gray-700 rounded-lg p-6 space-y-4"><div class="h-6 bg-gray-600 rounded w-1/2"></div><div class="h-24 bg-gray-600 rounded"></div><div class="h-4 bg-gray-600 rounded w-1/3"></div></div><div class="bg-gray-700 rounded-lg p-6 space-y-4"><div class="h-6 bg-gray-600 rounded w-1/2"></div><div class="h-24 bg-gray-600 rounded"></div><div class="h-4 bg-gray-600 rounded w-1/3"></div></div><div class="bg-gray-700 rounded-lg p-6 space-y-4"><div class="h-6 bg-gray-600 rounded w-1/2"></div><div class="h-24 bg-gray-600 rounded"></div><div class="h-4 bg-gray-600 rounded w-1/3"></div></div></div><p class="text-center mt-6 text-gray-400">Buscando preços atualizados...</p>`;
-
-            const fetchPromises = [
-                fetch(urlFibra),
-                urlTecidoAnterior ? fetch(urlTecidoAnterior) : Promise.resolve(null),
-                fetch(urlTecidoAtual)
-            ];
-            const [resFibra, resTecidoAnt, resTecidoAtual] = await Promise.all(fetchPromises);
-            const [dadosFibra, dadosTecidoAnt, dadosTecidoAtual] = await Promise.all([
-                resFibra.json(),
-                resTecidoAnt ? resTecidoAnt.json() : Promise.resolve(null),
-                resTecidoAtual.json()
-            ]);
-
-            const fibraData = dadosFibra.find(d => d.item_id === fibraItem);
-            const tecidoAnteriorData = tecidoAnteriorItem ? dadosTecidoAnt?.find(d => d.item_id === tecidoAnteriorItem) : null;
-            const tecidoAtualData = dadosTecidoAtual.find(d => d.item_id === tecidoAtualItem);
-
-            let errorMessage = '';
-            const encSuffixFibraError = enc > 0 ? `_LEVEL${enc}_${enc}` : '';
-            const encSuffixTecidoAntError = (tier - 1 >= 4 && enc > 0) ? `_LEVEL${enc}_${enc}` : '';
-            const encSuffixTecidoAtualError = enc > 0 ? `_LEVEL${enc}_${enc}` : '';
-
-            if (!fibraData?.sell_price_min) {
-                errorMessage += `<div class="flex items-center gap-3 mt-2"><img src="img/T${tier}_FIBER${encSuffixFibraError}.png" alt="Fibra" class="h-8 w-8"><span>Preço não encontrado para <strong>${fibraItem}</strong> em ${cidadeCompra}</span></div>`;
-            }
-            if (tier > 2 && !tecidoAnteriorData?.sell_price_min) {
-                errorMessage += `<div class="flex items-center gap-3 mt-2"><img src="img/T${tier - 1}_CLOTH${encSuffixTecidoAntError}.png" alt="Tecido Anterior" class="h-8 w-8"><span>Preço não encontrado para <strong>${tecidoAnteriorItem}</strong> em ${cidadeCompra}</span></div>`;
-            }
-            if (!tecidoAtualData?.sell_price_min) {
-                errorMessage += `<div class="flex items-center gap-3 mt-2"><img src="img/T${tier}_CLOTH${encSuffixTecidoAtualError}.png" alt="Tecido Atual" class="h-8 w-8"><span>Preço não encontrado para <strong>${tecidoAtualItem}</strong> em ${cidadeVenda}</span></div>`;
-            }
-
-            if (errorMessage) {
-                document.getElementById("resultado").innerHTML = `<div class="bg-red-900 text-white p-4 rounded-lg"><p class="font-bold"><i class="fas fa-exclamation-triangle mr-2"></i>Erro ao buscar preços</p>${errorMessage}<button onclick="calcular()" class="mt-4 bg-red-700 hover:bg-red-600 text-white px-4 py-2 rounded-lg"><i class="fas fa-sync-alt mr-2"></i>Tentar novamente</button></div>`;
-                finalizarBarraProgresso();
-                scrollParaResultados();
-                return;
-            }
-
-            const precoFibra = fibraData.sell_price_min;
-            const precoTecido = tecidoAnteriorData?.sell_price_min || 0;
-            const precoVenda = tecidoAtualData.sell_price_min;
-            const fibrasPorTecido = { 2: 1, 3: 2, 4: 2, 5: 3, 6: 4, 7: 5, 8: 5 };
-            const tecidosAnteriores = { 2: 0, 3: 1, 4: 1, 5: 1, 6: 1, 7: 1, 8: 1 };
-            const totalFibra = fibrasPorTecido[tier] * quantidade;
-            const totalTecidoAnterior = tecidosAnteriores[tier] * quantidade;
-            const tecidosRetornados = quantidade * (taxaRetorno / (100 - taxaRetorno));
-            const producaoTotal = quantidade + tecidosRetornados;
-            const imagensMateriais = carregarImagens(tier, enc, totalFibra, totalTecidoAnterior);
-            const custoFibra = totalFibra * precoFibra;
-            const custoTecidoAnterior = totalTecidoAnterior * precoTecido;
-            const custoBarraca = taxa;
-            const custoTotal = custoFibra + custoTecidoAnterior + custoBarraca;
-            const receita = producaoTotal * precoVenda;
-            const lucro = receita - custoTotal;
-            const rentabilidade = custoTotal > 0 ? ((lucro / custoTotal) * 100).toFixed(2) : "0.00";
-            const corLucro = lucro >= 0 ? "text-green-600" : "text-red-600";
-            const corLucro2 = rentabilidade >= 0 ? "text-green-600" : "text-red-600";
-
-            if ((tier === 2 || tier === 3) && enc > 0) {
-                document.getElementById("resultado").innerHTML = `<div class="bg-red-900 text-white p-4 rounded-lg"><p class="font-bold"><i class="fas fa-exclamation-triangle mr-2"></i>Erro</p><p class="mt-2">Tecidos T${tier} não possuem encantamento!</p><button onclick="calcular()" class="mt-4 bg-red-700 hover:bg-red-600 text-white px-4 py-2 rounded-lg"><i class="fas fa-sync-alt mr-2"></i>Tentar novamente</button></div>`;
-                finalizarBarraProgresso();
-                scrollParaResultados();
-                return;
-            }
-            const locaisComercioHTML = tier > 2 ? `<div class="grid grid-cols-1 md:grid-cols-3 gap-2"><p><span class="font-medium">Compra Fibra:</span> <span class="text-yellow-300">${cidadeCompra}</span></p><p><span class="font-medium">Compra Tecido:</span> <span class="text-yellow-300">${cidadeCompra}</span></p><p><span class="font-medium">Venda Tecido:</span> <span class="text-green-300">${cidadeVenda}</span></p></div>` : `<div class="grid grid-cols-1 md:grid-cols-2 gap-2"><p><span class="font-medium">Compra Fibra:</span> <span class="text-yellow-300">${cidadeCompra}</span></p><p><span class="font-medium">Venda Tecido:</span> <span class="text-green-300">${cidadeVenda}</span></p></div>`;
-            const temEncTecidoAnterior = tier - 1 >= 4 && enc > 0;
-            const encSuffixTecidoAnteriorHTML = temEncTecidoAnterior ? `_LEVEL${enc}_${enc}` : '';
-            const tecidoAnteriorCardHTML = tier > 2 ? `<div class="bg-gray-700 p-4 rounded-lg text-center shadow-lg hover:shadow-xl transition-shadow"><h3 class="font-semibold mb-2 text-blue-300">Tecido T${tier - 1}${temEncTecidoAnterior ? '.' + enc : ''}</h3><img src="img/T${tier - 1}_CLOTH${encSuffixTecidoAnteriorHTML}.png" class="mx-auto h-24 mb-2" alt="Tecido Anterior" onerror="this.src='img/default.png'"><p class="text-xl font-bold">$${formatarValor(precoTecido)}</p><p class="text-sm text-gray-400">por unidade</p></div>` : '';
-
-            document.getElementById("resultado").innerHTML = `
+        document.getElementById("resultado").innerHTML = `
             <h2 class="text-2xl font-bold mb-4 text-white border-b border-gray-600 pb-2">Resultados</h2>
             <div class="mb-6 p-4 bg-gray-700 rounded-lg shadow">
                 <h3 class="text-lg font-semibold mb-3 text-yellow-400">Locais de Comércio</h3>
@@ -206,35 +194,14 @@ async function calcular() {
                 </table>
             </div>
         `;
-            finalizarBarraProgresso();
-            scrollParaResultados();
-        } catch (err) {
-            console.error("Erro detalhado:", { cidades: { compra: cidadeCompra, venda: cidadeVenda }, urls: { urlFibra, urlTecidoAnterior, urlTecidoAtual }, error: err.message });
-            document.getElementById("resultado").innerHTML = `<div class="bg-red-900 text-white p-4 rounded-lg"><p class="font-bold"><i class="fas fa-exclamation-triangle mr-2"></i>Erro ao calcular</p><p class="mt-2">${err.message}</p><p class="mt-2 text-sm">Itens buscados:</p><ul class="text-sm mt-1"><li>${fibraItem}</li>${tecidoAnteriorItem ? `<li>${tecidoAnteriorItem}</li>` : ''}<li>${tecidoAtualItem}</li></ul><button onclick="calcular()" class="mt-4 bg-red-700 hover:bg-red-600 text-white px-4 py-2 rounded-lg"><i class="fas fa-sync-alt mr-2"></i>Tentar novamente</button></div>`;
-            finalizarBarraProgresso();
-            scrollParaResultados();
-        }
+        finalizarBarraProgresso();
+        scrollParaResultados();
     } catch (err) {
-        console.error("Erro ao calcular:", err);
-        this.mostrarErro(err.message);
+        console.error("Erro detalhado:", { cidades: { compra: cidadeCompra, venda: cidadeVenda }, urls: { urlFibra, urlTecidoAnterior, urlTecidoAtual }, error: err.message });
+        document.getElementById("resultado").innerHTML = `<div class="bg-red-900 text-white p-4 rounded-lg"><p class="font-bold"><i class="fas fa-exclamation-triangle mr-2"></i>Erro ao calcular</p><p class="mt-2">${err.message}</p><p class="mt-2 text-sm">Itens buscados:</p><ul class="text-sm mt-1"><li>${fibraItem}</li>${tecidoAnteriorItem ? `<li>${tecidoAnteriorItem}</li>` : ''}<li>${tecidoAtualItem}</li></ul><button onclick="calcular()" class="mt-4 bg-red-700 hover:bg-red-600 text-white px-4 py-2 rounded-lg"><i class="fas fa-sync-alt mr-2"></i>Tentar novamente</button></div>`;
+        finalizarBarraProgresso();
+        scrollParaResultados();
     }
-}
-
-mostrarErro(mensagem); {
-    const t = this.languageSystem.getTranslations('main');
-    document.getElementById("resultado").innerHTML = `
-            <div class="bg-red-900 text-white p-4 rounded-lg">
-                <p class="font-bold">
-                    <i class="fas fa-exclamation-triangle mr-2"></i>
-                    ${t.erro || "Erro"}
-                </p>
-                <p class="mt-2">${mensagem}</p>
-                <button onclick="window.calculator.calcular()" class="mt-4 bg-red-700 hover:bg-red-600 text-white px-4 py-2 rounded-lg">
-                    <i class="fas fa-sync-alt mr-2"></i>
-                    ${t.tentar_novamente || "Tentar novamente"}
-                </button>
-            </div>
-        `;
 }
 
 async function calcularall() {
@@ -345,59 +312,55 @@ function irParaIndex() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    window.calculator = new TecidoCalculator();
-
-    // Expor funções globais para o formulário
-    window.calcular = () => window.calculator.calcular();
-    window.calcularall = () => window.calculator.calcularall();
-
-    // Outras funções globais
-    window.scrollParaResultados = () => window.calculator.scrollParaResultados();
-    window.iniciarBarraProgresso = () => window.calculator.iniciarBarraProgresso();
-    window.finalizarBarraProgresso = () => window.calculator.finalizarBarraProgresso();
-});
-
-const toggleDiv = document.getElementById("toggle-theme");
-const themeIcon = document.getElementById("theme-icon");
-const html = document.documentElement;
-
-function aplicarTemaClaro() {
-    html.classList.add("light");
-    if (themeIcon) {
-        themeIcon.classList.remove("fa-moon");
-        themeIcon.classList.add("fa-sun");
-    }
-    localStorage.setItem("tema", "claro");
-}
-
-function aplicarTemaEscuro() {
-    html.classList.remove("light");
-    if (themeIcon) {
-        themeIcon.classList.remove("fa-sun");
-        themeIcon.classList.add("fa-moon");
-    }
-    localStorage.setItem("tema", "escuro");
-}
-
-if (toggleDiv) {
-    toggleDiv.addEventListener("click", () => {
-        if (html.classList.contains("light")) {
-            aplicarTemaEscuro();
-        } else {
-            aplicarTemaClaro();
+    setTimeout(() => {
+        const wrapper = document.getElementById('contentWrapper');
+        if (wrapper) {
+            wrapper.style.opacity = '1';
         }
-    });
-}
+    }, 50);
 
-const temaSalvo = localStorage.getItem("tema");
-if (temaSalvo === "claro") {
-    aplicarTemaClaro();
-} else {
-    aplicarTemaEscuro();
-}
+    const toggleDiv = document.getElementById("toggle-theme");
+    const themeIcon = document.getElementById("theme-icon");
+    const html = document.documentElement;
 
-window.addEventListener('popstate', function () {
-    window.location.reload();
+    function aplicarTemaClaro() {
+        html.classList.add("light");
+        if (themeIcon) {
+            themeIcon.classList.remove("fa-moon");
+            themeIcon.classList.add("fa-sun");
+        }
+        localStorage.setItem("tema", "claro");
+    }
+
+    function aplicarTemaEscuro() {
+        html.classList.remove("light");
+        if (themeIcon) {
+            themeIcon.classList.remove("fa-sun");
+            themeIcon.classList.add("fa-moon");
+        }
+        localStorage.setItem("tema", "escuro");
+    }
+
+    if (toggleDiv) {
+        toggleDiv.addEventListener("click", () => {
+            if (html.classList.contains("light")) {
+                aplicarTemaEscuro();
+            } else {
+                aplicarTemaClaro();
+            }
+        });
+    }
+
+    const temaSalvo = localStorage.getItem("tema");
+    if (temaSalvo === "claro") {
+        aplicarTemaClaro();
+    } else {
+        aplicarTemaEscuro();
+    }
 });
 
-window.irParaIndex = irParaIndex;
+    window.addEventListener('popstate', function () {
+        window.location.reload();
+    });
+
+    window.irParaIndex = irParaIndex;
