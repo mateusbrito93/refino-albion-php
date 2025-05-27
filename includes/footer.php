@@ -9,7 +9,8 @@
     </div>
 </footer>
 
-<script src="js/script-index.js"></script> <?php if (basename($_SERVER['PHP_SELF']) == 'index.php'): ?>
+<?php if (basename($_SERVER['PHP_SELF']) == 'index.php'): ?>
+    <script src="js/script-index.js"></script>
     <script src="js/lang-index.js"></script>
 <?php elseif (basename($_SERVER['PHP_SELF']) == 'tecido.php'): ?>
     <script src="js/lang-tecido.js"></script>
