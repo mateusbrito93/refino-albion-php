@@ -413,3 +413,58 @@ html.light .text-gray-300 {
 html.light .text-red-300 {
   color: #ef4444 !important;
 }
+
+/* Tema Claro - Específico para Index */
+.light-theme {
+  background-color: #f3f4f6 !important;
+  color: #1f2937 !important;
+}
+
+.light-theme .bg-gray-900,
+.light-theme .bg-gray-800 {
+  background-color: #e5e7eb !important;
+}
+
+.light-theme .card-refino {
+  background-color: #ffffff !important;
+  border-color: #d1d5db !important;
+}
+
+.light-theme .text-gray-400 {
+  color: #6b7280 !important;
+}
+
+/* Cores específicas dos cards */
+.light-theme .text-blue-300 {
+  color: #2563eb !important;
+}
+
+.light-theme .text-orange-300 {
+  color: #ea580c !important;
+}
+
+.light-theme .text-purple-300 {
+  color: #7c3aed !important;
+}
+
+.light-theme .text-green-300 {
+  color: #16a34a !important;
+}
+
+.light-theme .text-gray-300 {
+  color: #6b7280 !important;
+}
+
+.light-theme .text-red-300 {
+  color: #dc2626 !important;
+}
+
+/* Botão de tema */
+.light-theme .theme-switch {
+  background-color: #e5e7eb !important;
+  justify-content: flex-end;
+}
+
+.light-theme #theme-icon {
+  color: #f59e0b !important;
+}

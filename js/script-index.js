@@ -1,8 +1,48 @@
-// Elementos para a transição de página
+// Transição de página
 const pageTransition = document.getElementById('pageTransition');
 const contentWrapper = document.getElementById('contentWrapper');
 
-// Função para redirecionamento
+// Função para aplicar o tema
+function applyTheme(isLight) {
+    const html = document.documentElement;
+    const themeIcon = document.getElementById("theme-icon");
+
+    if (isLight) {
+        html.classList.add("light-theme"); // Usando light-theme para evitar conflitos
+        if (themeIcon) {
+            themeIcon.classList.replace("fa-moon", "fa-sun");
+        }
+    } else {
+        html.classList.remove("light-theme");
+        if (themeIcon) {
+            themeIcon.classList.replace("fa-sun", "fa-moon");
+        }
+    }
+}
+
+// Configuração inicial do tema
+function initTheme() {
+    const savedTheme = localStorage.getItem("tema");
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+    // Prioridade: localStorage > preferência do sistema > padrão (escuro)
+    applyTheme(savedTheme === "claro" || (!savedTheme && !prefersDark));
+}
+
+// Configuração do botão de tema
+function setupThemeSwitcher() {
+    const toggleDiv = document.getElementById("toggle-theme");
+
+    if (toggleDiv) {
+        toggleDiv.addEventListener("click", () => {
+            const isLight = !document.documentElement.classList.contains("light-theme");
+            applyTheme(isLight);
+            localStorage.setItem("tema", isLight ? "claro" : "escuro");
+        });
+    }
+}
+
+// Redirecionamento
 function redirecionar(pageUrl) {
     if (pageUrl && pageUrl !== '#') {
         if (pageTransition) pageTransition.classList.add('active');
@@ -34,63 +74,17 @@ function setupIndexCards() {
     });
 }
 
-// Gerenciamento de tema
-function setupThemeSwitcher() {
-    const toggleDiv = document.getElementById("toggle-theme");
-    const themeIcon = document.getElementById("theme-icon");
-    const html = document.documentElement;
-
-    const applyTheme = (isLight) => {
-        if (isLight) {
-            html.classList.add("light");
-            if (themeIcon) {
-                themeIcon.classList.replace("fa-moon", "fa-sun");
-            }
-            // Atualizar session via AJAX
-            fetch('set_theme.php?theme=claro');
-        } else {
-            html.classList.remove("light");
-            if (themeIcon) {
-                themeIcon.classList.replace("fa-sun", "fa-moon");
-            }
-            // Atualizar session via AJAX
-            fetch('set_theme.php?theme=escuro');
-        }
-    };
-
-    if (toggleDiv) {
-        toggleDiv.addEventListener("click", () => {
-            const isLight = !html.classList.contains("light");
-            applyTheme(isLight);
-            localStorage.setItem("tema", isLight ? "claro" : "escuro");
-        });
-    }
-
-    // Verificar tema (localStorage > session > preferência do sistema)
-    const savedTheme = localStorage.getItem("tema");
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-    if (savedTheme === "claro") {
-        applyTheme(true);
-    } else if (savedTheme === "escuro") {
-        applyTheme(false);
-    } else if (!prefersDark) {
-        applyTheme(true);
-    }
-}
-
-// Inicialização quando o DOM estiver pronto
+// Inicialização
 document.addEventListener("DOMContentLoaded", () => {
     setupIndexCards();
+    initTheme();
     setupThemeSwitcher();
 
-    // Animação de carregamento
     setTimeout(() => {
         if (contentWrapper) contentWrapper.style.opacity = '1';
     }, 50);
 });
 
-// Finalização do carregamento
 window.addEventListener('load', () => {
     if (contentWrapper) contentWrapper.classList.remove('fade-out');
     if (pageTransition) setTimeout(() => pageTransition.classList.remove('active'), 150);
