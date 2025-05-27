@@ -459,10 +459,13 @@ html.light .text-red-300 {
   color: #dc2626 !important;
 }
 
+.light-theme .text-red
+
 /* Botão de tema */
 .light-theme .theme-switch {
   background-color: #e5e7eb !important;
   justify-content: flex-end;
+  color: #000000;
 }
 
 .light-theme #theme-icon {

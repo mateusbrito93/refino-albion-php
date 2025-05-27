@@ -26,10 +26,8 @@
     <link rel="preload" href="img/tecido.webp" as="image">
 </head>
 
-<body class="p-6 font-sans min-h-screen <?php
-echo (basename($_SERVER['PHP_SELF']) == 'index.php' ? 'bg-gray-900 text-white' : '');
-echo (isset($_SESSION['tema']) && $_SESSION['tema'] === 'claro' ? ' light' : '');
-?>">
+<body
+    class="p-6 font-sans min-h-screen <?php echo (basename($_SERVER['PHP_SELF']) == 'index.php' ? 'bg-gray-900 text-white' : ''); ?>">
     <div id="pageTransition" class="page-transition">
         <span class="loader"></span>
     </div>
@@ -67,17 +65,17 @@ echo (isset($_SESSION['tema']) && $_SESSION['tema'] === 'claro' ? ' light' : '')
             <?php endif; ?>
         </div>
     </header>
-    </body>
-    <?php
-    $currentPage = basename($_SERVER['PHP_SELF']);
-    if ($currentPage == 'tecido.php' || $currentPage == 'pelego.php'):
-        ?>
-        <div class="max-w-6xl mx-auto mb-6 px-4">
-            <button onclick="window.location.href = 'index.php'"
-                class="bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-lg transition-colors flex items-center">
-                <i class="fas fa-arrow-left mr-2"></i> Voltar
-            </button>
-        </div>
-        <div id="barra-progresso" class="fixed top-0 left-0 w-0 h-1 bg-blue-500 z-50 transition-all duration-300 ease-out">
-        </div>
-    <?php endif; ?>
+</body>
+<?php
+$currentPage = basename($_SERVER['PHP_SELF']);
+if ($currentPage == 'tecido.php' || $currentPage == 'pelego.php'):
+    ?>
+    <div class="max-w-6xl mx-auto mb-6 px-4">
+        <button onclick="window.location.href = 'index.php'"
+            class="bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-lg transition-colors flex items-center">
+            <i class="fas fa-arrow-left mr-2"></i> Voltar
+        </button>
+    </div>
+    <div id="barra-progresso" class="fixed top-0 left-0 w-0 h-1 bg-blue-500 z-50 transition-all duration-300 ease-out">
+    </div>
+<?php endif; ?>
