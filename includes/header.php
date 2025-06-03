@@ -24,6 +24,9 @@
     <link rel="preload" href="img/minerio.webp" as="image">
     <link rel="preload" href="img/pelego.webp" as="image">
     <link rel="preload" href="img/tecido.webp" as="image">
+    <link rel="preload" href="img/pedra.webp" as="image">
+    <link rel="preload" href="img/madeira.webp" as="image">
+    <link rel="preload" href="img/outros.webp" as="image">
 </head>
 
 <body

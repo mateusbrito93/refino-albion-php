@@ -413,3 +413,11 @@ html.light .text-gray-300 {
 html.light .text-red-300 {
   color: #ef4444 !important;
 }
+
+/* Imagens Circular */
+.img-circular {
+  width: 100px;       /* tamanho desejado */
+  height: 300px;
+  object-fit: cover;  /* imagem centralizada e proporcional */
+  border-radius: 50%;
+}

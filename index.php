@@ -12,7 +12,7 @@ include 'includes/header.php';
     <div class="card-refino bg-gray-800 rounded-xl p-6 shadow-lg transition-all duration-300 cursor-pointer"
       onclick="redirecionar('#')">
       <div class="flex flex-col items-center text-center">
-        <img src="img/minerio.webp" alt="Minério" class="h-24 mb-4">
+        <img src="img/minerio.webp" alt="Minério" class="h-24 mb-4 img-circular">
         <h3 class="text-xl font-bold mb-2 text-blue-300" id="minerio"></h3>
         <p class="text-gray-400" id="mineriodesc"></p>
       </div>
@@ -20,7 +20,7 @@ include 'includes/header.php';
     <div class="card-refino bg-gray-800 rounded-xl p-6 shadow-lg transition-all duration-300 cursor-pointer"
       onclick="redirecionar('pelego')">
       <div class="flex flex-col items-center text-center">
-        <img src="img/pelego.webp" alt="Pelego" class="h-24 mb-4">
+        <img src="img/pelego.webp" alt="Pelego" class="h-24 mb-4 img-circular">
         <h3 class="text-xl font-bold mb-2 text-orange-300" id="pelego"></h3>
         <p class="text-gray-400" id="pelegodesc"></p>
       </div>
@@ -28,7 +28,7 @@ include 'includes/header.php';
     <div class="card-refino bg-gray-800 rounded-xl p-6 shadow-lg transition-all duration-300 cursor-pointer"
       onclick="redirecionar('tecido')">
       <div class="flex flex-col items-center text-center">
-        <img src="img/tecido.webp" alt="Tecido" class="h-24 mb-4">
+        <img src="img/tecido.webp" alt="Tecido" class="h-24 mb-4 img-circular">
         <h3 class="text-xl font-bold mb-2 text-purple-300" id="tecido"></h3>
         <p class="text-gray-400" id="tecidodesc"></p>
       </div>
@@ -36,7 +36,7 @@ include 'includes/header.php';
     <div class="card-refino bg-gray-800 rounded-xl p-6 shadow-lg transition-all duration-300 cursor-pointer"
       onclick="redirecionar('#')">
       <div class="flex flex-col items-center text-center">
-        <img src="img/madeira.png" alt="Madeira" class="h-24 mb-4">
+        <img src="img/madeira.webp" alt="Madeira" class="h-24 mb-4 img-circular">
         <h3 class="text-xl font-bold mb-2 text-green-300" id="madeira"></h3>
         <p class="text-gray-400" id="madeiradesc"></p>
       </div>
@@ -44,7 +44,7 @@ include 'includes/header.php';
     <div class="card-refino bg-gray-800 rounded-xl p-6 shadow-lg transition-all duration-300 cursor-pointer"
       onclick="redirecionar('#')">
       <div class="flex flex-col items-center text-center">
-        <img src="img/pedra.png" alt="Pedra" class="h-24 mb-4">
+        <img src="img/pedra.webp" alt="Pedra" class="h-24 mb-4 img-circular">
         <h3 class="text-xl font-bold mb-2 text-gray-300" id="pedra"></h3>
         <p class="text-gray-400" id="pedradesc"></p>
       </div>
@@ -52,7 +52,7 @@ include 'includes/header.php';
     <div class="card-refino bg-gray-800 rounded-xl p-6 shadow-lg transition-all duration-300 cursor-pointer"
       onclick="redirecionar('#')">
       <div class="flex flex-col items-center text-center">
-        <img src="img/outros.png" alt="Outros" class="h-24 mb-4">
+        <img src="img/outros.webp" alt="Outros" class="h-24 mb-4 img-circular">
         <h3 class="text-xl font-bold mb-2 text-red-300" id="outros"></h3>
         <p class="text-gray-400" id="outrosdesc"></p>
       </div>
