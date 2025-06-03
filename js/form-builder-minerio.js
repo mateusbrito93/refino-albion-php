@@ -1,4 +1,4 @@
-class FormBuilderTecido {
+class FormBuilderMinerio {
     constructor() {
         this.languageSystem = window.languageSystem;
         this.init();
@@ -204,7 +204,7 @@ class FormBuilderTecido {
 document.addEventListener("DOMContentLoaded", () => {
     const initFormBuilder = () => {
         try {
-            new FormBuilderTecido();
+            new FormBuilderMinerio();
         } catch (error) {
             console.error("Erro ao iniciar FormBuilder:", error);
             // Fallback extremo - mostra formulário básico
