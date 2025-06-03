@@ -28,6 +28,16 @@
     <script src="js/lang-minerio.js"></script>
     <script src="js/script-minerio.js"></script>
     <script src="js/form-builder-minerio.js"></script>
+<?php elseif (basename($_SERVER['PHP_SELF']) == 'madeira.php'): ?>
+    <script src="js/theme.js"></script>
+    <script src="js/lang-madeira.js"></script>
+    <script src="js/script-madeira.js"></script>
+    <script src="js/form-builder-madeira.js"></script>
+<?php elseif (basename($_SERVER['PHP_SELF']) == 'pedra.php'): ?>
+    <script src="js/theme.js"></script>
+    <script src="js/lang-pedra.js"></script>
+    <script src="js/script-pedra.js"></script>
+    <script src="js/form-builder-pedra.js"></script>
 <?php endif; ?>
 </body>
 
