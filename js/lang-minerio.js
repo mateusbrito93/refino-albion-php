@@ -19,8 +19,8 @@ window.languageSystem = {
       return {
         tier: t.form_tier || "Tier",
         encantamento: t.form_encantamento || "Encantamento",
-        cidadeCompra: t.form_cidadeCompraPelego || "Cidade de Compra (Pelego)",
-        cidadeVenda: t.form_cidadeVendaCouro || "Cidade de Venda (Couro)",
+        cidadeCompra: t.form_cidadeCompraFibra || "Cidade de Compra (Minério)",
+        cidadeVenda: t.form_cidadeVendaTecido || "Cidade de Venda (Barra)",
         quantidade: t.form_quantidade || "Quantidade",
         taxaImposto: t.form_taxaImposto || "Taxa de Imposto",
         taxaRetorno: t.form_taxaRetorno || "Taxa de Retorno",

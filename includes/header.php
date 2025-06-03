@@ -41,7 +41,7 @@
             <h1 class="text-xl font-bold flex items-center">
                 <i class="fas <?php
                 $currentPage = basename($_SERVER['PHP_SELF']);
-                if ($currentPage == 'tecido.php' || $currentPage == 'pelego.php') {
+                if ($currentPage == 'tecido.php' || $currentPage == 'pelego.php' || $currentPage == 'minerio.php') {
                     echo 'fa-scroll';
                 } else {
                     echo 'fa-industry';
@@ -56,7 +56,7 @@
             </div>
             <?php
             $currentPage = basename($_SERVER['PHP_SELF']);
-            if ($currentPage == 'index.php' || $currentPage == 'tecido.php' || $currentPage == 'pelego.php'):
+            if ($currentPage == 'index.php' || $currentPage == 'tecido.php' || $currentPage == 'pelego.php' || $currentPage == 'minerio.php'):
                 ?>
                 <div id="toggle-theme"
                     class="theme-switch cursor-pointer w-14 h-8 rounded-full flex items-center px-1 transition duration-300 border border-gray-400 bg-gray-700">
@@ -71,7 +71,7 @@
 </body>
 <?php
 $currentPage = basename($_SERVER['PHP_SELF']);
-if ($currentPage == 'tecido.php' || $currentPage == 'pelego.php'):
+if ($currentPage == 'tecido.php' || $currentPage == 'pelego.php' || $currentPage == 'minerio.php'):
     ?>
     <div class="max-w-6xl mx-auto mb-6 px-4">
         <button onclick="window.location.href = 'index.php'"

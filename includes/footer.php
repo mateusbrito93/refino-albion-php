@@ -23,6 +23,11 @@
     <script src="js/lang-pelego.js"></script>
     <script src="js/script-pelego.js"></script>
     <script src="js/form-builder-pelego.js"></script>
+<?php elseif (basename($_SERVER['PHP_SELF']) == 'minerio.php'): ?>
+    <script src="js/theme.js"></script>
+    <script src="js/lang-minerio.js"></script>
+    <script src="js/script-minerio.js"></script>
+    <script src="js/form-builder-minerio.js"></script>
 <?php endif; ?>
 </body>
 

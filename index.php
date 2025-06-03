@@ -10,7 +10,7 @@ include 'includes/header.php';
 
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
     <div class="card-refino bg-gray-800 rounded-xl p-6 shadow-lg transition-all duration-300 cursor-pointer"
-      onclick="redirecionar('#')">
+      onclick="redirecionar('minerio')">
       <div class="flex flex-col items-center text-center">
         <img src="img/minerio.webp" alt="Minério" class="h-24 mb-4 img-circular">
         <h3 class="text-xl font-bold mb-2 text-blue-300" id="minerio"></h3>
