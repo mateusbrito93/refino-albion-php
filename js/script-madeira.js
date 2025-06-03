@@ -108,8 +108,8 @@ async function calcular() {
         const imagensMateriais = carregarImagens(tier, enc, totalMadeira, totalTabuaAnterior);
         const custoMadeira = totalMadeira * precoMadeira;
         const custoTabuaAnterior = totalTabuaAnterior * precoTabua;
-        const custoTabuaca = taxa;
-        const custoTotal = custoMadeira + custoTabuaAnterior + custoTabuaca;
+        const custoBarraca = taxa;
+        const custoTotal = custoMadeira + custoTabuaAnterior + custoBarraca;
         const receita = producaoTotal * precoVenda;
         const lucro = receita - custoTotal;
         const rentabilidade = custoTotal > 0 ? ((lucro / custoTotal) * 100).toFixed(2) : "0.00";

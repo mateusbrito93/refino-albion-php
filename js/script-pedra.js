@@ -108,8 +108,8 @@ async function calcular() {
         const imagensMateriais = carregarImagens(tier, enc, totalPedra, totalBlocoAnterior);
         const custoPedra = totalPedra * precoPedra;
         const custoBlocoAnterior = totalBlocoAnterior * precoBloco;
-        const custoBlococa = taxa;
-        const custoTotal = custoPedra + custoBlocoAnterior + custoBlococa;
+        const custoBarraca = taxa;
+        const custoTotal = custoPedra + custoBlocoAnterior + custoBarraca;
         const receita = producaoTotal * precoVenda;
         const lucro = receita - custoTotal;
         const rentabilidade = custoTotal > 0 ? ((lucro / custoTotal) * 100).toFixed(2) : "0.00";
