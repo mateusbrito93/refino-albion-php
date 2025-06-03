@@ -34,7 +34,7 @@ include 'includes/header.php';
       </div>
     </div>
     <div class="card-refino bg-gray-800 rounded-xl p-6 shadow-lg transition-all duration-300 cursor-pointer"
-      onclick="redirecionar('#')">
+      onclick="redirecionar('madeira')">
       <div class="flex flex-col items-center text-center">
         <img src="img/madeira.webp" alt="Madeira" class="h-24 mb-4 img-circular">
         <h3 class="text-xl font-bold mb-2 text-green-300" id="madeira"></h3>
@@ -42,7 +42,7 @@ include 'includes/header.php';
       </div>
     </div>
     <div class="card-refino bg-gray-800 rounded-xl p-6 shadow-lg transition-all duration-300 cursor-pointer"
-      onclick="redirecionar('#')">
+      onclick="redirecionar('pedra')">
       <div class="flex flex-col items-center text-center">
         <img src="img/pedra.webp" alt="Pedra" class="h-24 mb-4 img-circular">
         <h3 class="text-xl font-bold mb-2 text-gray-300" id="pedra"></h3>
