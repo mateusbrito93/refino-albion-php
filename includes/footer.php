@@ -3,7 +3,7 @@
     <div class="max-w-6xl mx-auto px-4">
         <p class="text-sm" id="copyright"></p>
         <p class="text-xs mt-1">
-            By <span class="text-blue-300"><a href="https://www.linkedin.com/in/mateus-brito-071b1366/"
+            By <span class="text-blue-300"><a href="https://www.linkedin.com/in/mateusbrito93/"
                     target="_blank">Mateus Brito</a></span>
         </p>
     </div>
