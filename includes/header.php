@@ -58,13 +58,6 @@
             $currentPage = basename($_SERVER['PHP_SELF']);
             if ($currentPage == 'index.php' || $currentPage == 'tecido.php' || $currentPage == 'pelego.php' || $currentPage == 'minerio.php' || $currentPage == 'madeira.php' || $currentPage == 'pedra.php'):
                 ?>
-                <div id="toggle-theme"
-                    class="theme-switch cursor-pointer w-14 h-8 rounded-full flex items-center px-1 transition duration-300 border border-gray-400 bg-gray-700">
-                    <div
-                        class="switch-handle w-6 h-6 bg-white rounded-full transition-transform duration-300 transform flex items-center justify-center">
-                        <i id="theme-icon" class="fas fa-moon text-gray-900 text-sm"></i>
-                    </div>
-                </div>
             <?php endif; ?>
         </div>
     </header>
